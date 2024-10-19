@@ -1,9 +1,29 @@
 import { Stats } from '../modals/Stats.js';
 import { catchAsynError } from '../middlewares/catchAsyncError.js';
+import {sendEmail} from '../utils/sendEmail.js';
+import ErrorHandler from '../utils/ErrorHandler.js';
 
 
 
+export const contact = catchAsynError(async (req,res,next)=>{
+    const {name,email,message}=req.body;
 
+    if(!name || !email || !message){
+        return next(new ErrorHandler("Please fill all the fields",400));}
+
+
+        const to= process.env.MY_MAIL;
+        const subject="Contact from PaperBundler";
+        const text=`I am ${name} and my email is ${email}. \nMy message is ${message}`;
+
+        await sendEmail(to,subject,text);
+    
+
+    res.status(200).json({
+        success:true,
+        message:"Message sent successfully"
+    });
+})
 
 export const getDashboardStats = catchAsynError(async (req, res, next) => {
 

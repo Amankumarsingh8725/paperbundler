@@ -56,7 +56,7 @@ export const login = catchAsynError(async (req, res, next) => {
     if (!isMatch)
         return next(new ErrorHandler("Incorrect Email & Password", 401));
 
-    sendToken(res, user, `Welcome banck, ${user.name}`, 200)
+    sendToken(res, user, `Welcome back, ${user.name}`, 200)
 
 })
 
