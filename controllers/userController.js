@@ -154,7 +154,8 @@ export const forgetPassword = catchAsynError(async (req, res, next) => {
 
     // send token via email
     const url = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`
-    const message = `Click on the link to reset your password.${url}.If you are not requistes then ignore.`;
+    const message = `Click on the link to reset your password.${url}   \n
+       .If you are not requistes then ignore.`;
     await sendEmail(user.email, "Paperbundler Reset Password", message);
 
     res.status(200).json({
